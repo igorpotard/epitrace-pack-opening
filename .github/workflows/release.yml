@@ -17,7 +17,7 @@ jobs:
 
       - name: Create ZIP file
         run: |
-          zip -r epitrace-pack.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
+          zip -r epitrace-pack-v1.0.${{ github.run_number }}.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
 
       - name: Upload ZIP as artifact (for debugging)
         uses: actions/upload-artifact@v4
@@ -29,9 +29,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: success()
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
           tag_name: v1.0.${{ github.run_number }}
-          release_name: "EPITRACE Pack Release v1.0.${{ github.run_number }}"
+          name: "EPITRACE Pack Release v1.0.${{ github.run_number }}"
           draft: false
           prerelease: false
           files: epitrace-pack.zip
