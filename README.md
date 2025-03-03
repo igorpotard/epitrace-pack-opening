@@ -2,7 +2,7 @@
 
 ## Download
 
-While we are waiting for Mozilla validation, you can still download the extension directly from our [GitHub releases page](https://github.com/Axthauvin/epitrace-packs/releases/tag/1.0.1).
+While im waiting for Mozilla validation, you can still download the extension directly from the [GitHub releases page](https://github.com/Axthauvin/epitrace-packs/releases/tag/1.0.1).
 
 ## Overview
 
@@ -26,7 +26,7 @@ To install the EPITRACE Packs extension, follow these steps:
 
 ## Contributing
 
-We welcome contributions from the community! If you have any suggestions, ideas, or issues, please don't hesitate to open an issue on our GitHub repository. Your feedback is invaluable in helping us improve the extension.
+If you have any suggestions, ideas, or issues, please don't hesitate to open an issue on the GitHub repository. Your feedback is invaluable in helping me improving the extension.
 
 ## License
 
