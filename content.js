@@ -63,7 +63,11 @@ function closePackDisplay() {
 }
 
 async function add_open_pack_button(traceSymbol) {
-  if (traceSymbol.getAttribute("errorstatus") != "") return; // Skip error status
+  if (
+    traceSymbol.getAttribute("errorstatus") != "" ||
+    traceSymbol.getAttribute("status") != "SUCCEEDED"
+  )
+    return; // Skip error status
 
   a_tag = find_a(traceSymbol);
   var link = a_tag.href;
