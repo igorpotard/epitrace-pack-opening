@@ -17,7 +17,7 @@ jobs:
 
       - name: Create ZIP file
         run: |
-          zip -r epitrace-pack-v1.0.${{ github.run_number }}.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
+          zip -r epitrace-pack.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
 
       - name: Upload ZIP as artifact (for debugging)
         uses: actions/upload-artifact@v4
