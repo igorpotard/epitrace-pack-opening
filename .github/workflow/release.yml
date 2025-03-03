@@ -2,8 +2,8 @@ name: Build & Release Extension
 
 on:
   push:
-    branches:
-      - main # Déclencher lors d'un commit sur main
+    tags:
+      - "release*"
   workflow_dispatch: # Permet de lancer manuellement
 
 jobs:
