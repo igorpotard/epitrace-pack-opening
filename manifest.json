@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "FIFA Pack Opener",
+  "version": "1.0",
+  "description": "Open FIFA-style packs with an animation!",
+  "content_scripts": [
+    {
+      "matches": ["*://intra.forge.epita.fr/*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "web_accessible_resources": ["img/*.png"]
+}
