@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "EPITRACE Packs",
   "version": "1.0",
   "description": "Open your traces with a FIFA-style packs with an animation!",
@@ -10,6 +10,12 @@
       "css": ["style.css"]
     }
   ],
-  "web_accessible_resources": ["img/*.png"],
-  "permissions": ["storage"]
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*.png"],
+      "matches": ["*://intra.forge.epita.fr/*"]
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": ["*://intra.forge.epita.fr/*"]
 }
