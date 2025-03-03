@@ -1,6 +1,8 @@
 # EPITRACE Packs Extension
 
-## [Download the EPITRACE Packs Extension on the mozilla addon website](https://addons.mozilla.org/fr/firefox/addon/epitrace-pack/)
+## Download
+
+While we are waiting for Mozilla validation, you can still download the extension directly from our [GitHub releases page](https://github.com/Axthauvin/epitrace-packs/releases/tag/1.0.1).
 
 ## Overview
 
