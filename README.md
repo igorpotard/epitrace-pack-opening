@@ -1,5 +1,7 @@
 # EPITRACE Packs Extension
 
+## [Download the EPITRACE Packs Extension on the mozilla addon website](https://addons.mozilla.org/fr/firefox/addon/epitrace-pack/)
+
 ## Overview
 
 The EPITRACE Packs extension is a Firefox add-on designed to enhance the experience EPITA students. This extension allows users to open traces as FIFA packs, adding an element of fun during projects or piscines, and providing an **_opportunity to flex_**.
