@@ -257,9 +257,6 @@ async function openPackAnimation(button, inputPercentage) {
           pack.addEventListener("click", function () {
             document.location.href = href;
           });
-
-          /*// Add 500ms delay before changing location
-          setTimeout(() => {}, 500);*/
         }
 
         i++;
