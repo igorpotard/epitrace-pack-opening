@@ -18,7 +18,7 @@ To install the FIFA EPITA extension, follow these steps:
 
 1. Download the extension from the Firefox Add-ons store.
 2. Click "Add to Firefox" and confirm the installation.
-3. Open the intranet, and go ope your traces !
+3. Open the intranet, and go open your traces !
 
 ## Contributing
 
