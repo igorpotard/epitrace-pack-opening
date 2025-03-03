@@ -221,7 +221,8 @@ async function openPackAnimation(button, inputPercentage) {
         pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
       } else {
         pack_text.textContent = percentages[i];
-        //
+
+        pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
 
         if (i == percentages.length - 1) {
           clearInterval(interval);
