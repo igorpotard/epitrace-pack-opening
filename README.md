@@ -14,11 +14,11 @@ The EPITRACE Packs extension is a Firefox add-on designed to enhance the experie
 
 - **Flex Your Achievements**: Flex in front of your friends when you have a icon pack !
 
-![FIFA EPITA Extension](./images_github/illustration.gif)
+![EPITRACE Packs Extension](./images_github/illustration.gif)
 
 ## Installation
 
-To install the FIFA EPITA extension, follow these steps:
+To install the EPITRACE Packs extension, follow these steps:
 
 1. Download the extension from the Firefox Add-ons store.
 2. Click "Add to Firefox" and confirm the installation.
