@@ -3,10 +3,7 @@
 console.log("content.js");
 
 function find_a(el) {
-  if (el.tagName == "A") {
-    return el;
-  }
-
+  if (el.tagName == "A") return el;
   return find_a(el.parentElement);
 }
 
@@ -24,7 +21,6 @@ function addHashToDB(hash) {
 // Function to check if the database contains the hash
 async function isHashInDB(hash) {
   let result = await browser.storage.local.get({ hashes: [] });
-  console.log(result.hashes);
   return result.hashes.includes(hash);
 }
 
@@ -66,55 +62,56 @@ function closePackDisplay() {
   }
 }
 
-function replaceTraceSymbols() {
+async function add_open_pack_button(traceSymbol) {
+  if (traceSymbol.getAttribute("errorstatus") != "") return; // Skip error status
+
+  a_tag = find_a(traceSymbol);
+  var link = a_tag.href;
+
+  if ((await isHashInDB(link)) == true) return; // Skip if already processed
+
+  let percentage = traceSymbol.getAttribute("successpercent");
+  let button = document.createElement("button");
+  button.textContent = "Open EpiPack";
+  button.style.background = "#007BFF";
+  button.style.color = "white";
+  button.style.border = "none";
+  button.style.padding = "5px 10px";
+  button.style.cursor = "pointer";
+  button.style.margin = "5px";
+
+  traceSymbol.setAttribute("data-processed", "true"); // Prevent duplicate processing
+  traceSymbol.style.display = "none";
+  traceSymbol.parentNode.insertBefore(button, traceSymbol);
+
+  a_tag.href = "#";
+  console.log(a_tag);
+  console.log(traceSymbol);
+
+  traceSymbol.setAttribute("link", link);
+
+  a_tag.addEventListener("click", function () {
+    openPackAnimation(button, percentage);
+  });
+
+  button.addEventListener("click", function () {
+    openPackAnimation(button, percentage);
+  });
+}
+
+async function replaceTraceSymbols() {
   if (document.body.dataset.replaceTraceSymbolsExecuted) {
     return;
   }
+
   document.body.dataset.replaceTraceSymbolsExecuted = true;
-  console.log("replaceTraceSymbols");
+
   add_pack_display();
-  document
-    .querySelectorAll("trace-symbol:not([data-processed])")
-    .forEach(async (traceSymbol) => {
-      if (traceSymbol.getAttribute("errorstatus") != "") return; // Skip error status
+  var alls = document.querySelectorAll("trace-symbol:not([data-processed])");
 
-      a_tag = find_a(traceSymbol);
-      var link = a_tag.href;
-
-      console.log(link);
-
-      if ((await isHashInDB(link)) == true) {
-        console.log("isHashInDB");
-        return;
-      }
-
-      console.log("not isHashInDB");
-
-      let percentage = traceSymbol.getAttribute("successpercent");
-      let button = document.createElement("button");
-      button.textContent = "Open EpiPack";
-      button.style.background = "#007BFF";
-      button.style.color = "white";
-      button.style.border = "none";
-      button.style.padding = "5px 10px";
-      button.style.cursor = "pointer";
-      button.style.margin = "5px";
-
-      traceSymbol.setAttribute("data-processed", "true"); // Prevent duplicate processing
-      traceSymbol.style.display = "none";
-      traceSymbol.parentNode.insertBefore(button, traceSymbol);
-
-      a_tag.href = "#";
-      traceSymbol.setAttribute("link", link);
-
-      a_tag.addEventListener("click", function () {
-        openPackAnimation(button, percentage);
-      });
-
-      button.addEventListener("click", function () {
-        openPackAnimation(button, percentage);
-      });
-    });
+  for (let i = 0; i < alls.length; i++) {
+    await add_open_pack_button(alls[i]);
+  }
 }
 
 // Use MutationObserver to track dynamically loaded content
@@ -164,41 +161,6 @@ function get_color(image) {
 
 function get_url(percentage) {
   return browser.runtime.getURL("img/" + get_image(percentage) + ".png");
-}
-
-function go_percentage(pack_text, pack, is_final, inputPercentage, href) {
-  setTimeout(() => {
-    let currentPercentage = 100;
-    let decreaseTime = 1000; // 1 second total decrease time
-    let steps = 20; // Number of steps
-    let stepTime = decreaseTime / steps;
-    let decrement = (100 - inputPercentage) / steps;
-
-    let interval = setInterval(() => {
-      if (currentPercentage > inputPercentage) {
-        // Generate a random variation
-        currentPercentage -= decrement;
-        currentPercentage = Math.max(currentPercentage, inputPercentage); // Ensure it doesn't go below target
-
-        pack_text.textContent = Math.floor(currentPercentage);
-        pack.style.backgroundImage = `url(${get_url(currentPercentage)})`;
-      } else {
-        pack_text.textContent = inputPercentage;
-        clearInterval(interval);
-
-        if (is_final) {
-          if (inputPercentage == 100) {
-            make_confetis();
-          }
-
-          // Add 500ms delay before changing location
-          setTimeout(() => {
-            document.location.href = href;
-          }, 500);
-        }
-      }
-    }, stepTime);
-  }, 1000);
 }
 
 let href = "";
