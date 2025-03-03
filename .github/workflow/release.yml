@@ -1,0 +1,37 @@
+name: Build & Release Extension
+
+on:
+  push:
+    branches:
+      - main # Déclencher lors d'un commit sur main
+  workflow_dispatch: # Permet de lancer manuellement
+
+jobs:
+  build:
+    name: Create ZIP and Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create ZIP file
+        run: |
+          zip -r epitrace-pack.zip . -x "*.git*" ".github/*" "README.md" "LICENSE" "*.zip" "images_github"
+
+      - name: Upload ZIP as artifact (for debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: epitrace-pack
+          path: epitrace-pack.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: success()
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: "EPITRACE Pack Release v1.0.${{ github.run_number }}"
+          draft: false
+          prerelease: false
+          files: epitrace-pack.zip
