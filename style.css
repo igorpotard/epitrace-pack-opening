@@ -1,9 +1,5 @@
-/*body {
-  text-align: center;
-  font-family: Arial, sans-serif;
-  width: 250px;
-}*/
-
+/*
+DISABLED FOR NOW
 .stack:nth-child(2) {
   flex-direction: row-reverse !important;
 }
@@ -12,7 +8,7 @@
   .stack:nth-child(2) {
     flex-direction: column-reverse !important;
   }
-}
+}*/
 
 .pack {
   width: 400px;
