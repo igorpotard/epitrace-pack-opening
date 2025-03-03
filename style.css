@@ -4,12 +4,12 @@
   width: 250px;
 }*/
 
-.stack {
+.stack:nth-child(2) {
   flex-direction: row-reverse !important;
 }
 
 @media screen and (max-width: 1600px) {
-  .stack {
+  .stack:nth-child(2) {
     flex-direction: column-reverse !important;
   }
 }
@@ -30,6 +30,8 @@
   background-size: cover;
   background-position: center;
   position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .text-pack {

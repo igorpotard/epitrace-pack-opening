@@ -10,6 +10,24 @@ function find_a(el) {
   return find_a(el.parentElement);
 }
 
+// Function to add the current hash to a database
+function addHashToDB(hash) {
+  browser.storage.local.get({ hashes: [] }).then((result) => {
+    let hashes = result.hashes;
+    if (!hashes.includes(hash)) {
+      hashes.push(hash);
+      browser.storage.local.set({ hashes: hashes });
+    }
+  });
+}
+
+// Function to check if the database contains the hash
+async function isHashInDB(hash) {
+  let result = await browser.storage.local.get({ hashes: [] });
+  console.log(result.hashes);
+  return result.hashes.includes(hash);
+}
+
 let confettiWrapper = document.createElement("div");
 confettiWrapper.classList.add("confetti-wrapper");
 confettiWrapper.style.zIndex = "9999";
@@ -36,6 +54,7 @@ function addPackToDisplay(pack) {
     packDisplayer.innerHTML = ""; // Clear previous pack if exists
     packDisplayer.appendChild(pack);
     packDisplayer.style.display = "flex";
+    packDisplayer.addEventListener("click", closePackDisplay);
   }
 }
 
@@ -48,12 +67,29 @@ function closePackDisplay() {
 }
 
 function replaceTraceSymbols() {
+  if (document.body.dataset.replaceTraceSymbolsExecuted) {
+    return;
+  }
+  document.body.dataset.replaceTraceSymbolsExecuted = true;
   console.log("replaceTraceSymbols");
   add_pack_display();
   document
     .querySelectorAll("trace-symbol:not([data-processed])")
-    .forEach((traceSymbol) => {
+    .forEach(async (traceSymbol) => {
       if (traceSymbol.getAttribute("errorstatus") != "") return; // Skip error status
+
+      a_tag = find_a(traceSymbol);
+      var link = a_tag.href;
+
+      console.log(link);
+
+      if ((await isHashInDB(link)) == true) {
+        console.log("isHashInDB");
+        return;
+      }
+
+      console.log("not isHashInDB");
+
       let percentage = traceSymbol.getAttribute("successpercent");
       let button = document.createElement("button");
       button.textContent = "Open EpiPack";
@@ -67,8 +103,7 @@ function replaceTraceSymbols() {
       traceSymbol.setAttribute("data-processed", "true"); // Prevent duplicate processing
       traceSymbol.style.display = "none";
       traceSymbol.parentNode.insertBefore(button, traceSymbol);
-      a_tag = find_a(traceSymbol);
-      var link = a_tag.href;
+
       a_tag.href = "#";
       traceSymbol.setAttribute("link", link);
 
@@ -250,6 +285,8 @@ async function openPackAnimation(button, inputPercentage) {
           span.style.fontSize = "20px";
           span.style.fontWeight = "bold";
           document.getElementById("pack-displayer").appendChild(span);
+
+          addHashToDB(href);
 
           pack.addEventListener("click", function () {
             document.location.href = href;
