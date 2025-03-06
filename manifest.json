@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "EPITRACE Packs",
   "version": "1.0",
-  "description": "Open your traces with a FIFA-style packs with an animation!",
+  "description": "Open your traces with a pack opening animation!",
   "content_scripts": [
     {
       "matches": ["*://intra.forge.epita.fr/*"],

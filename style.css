@@ -41,7 +41,7 @@ DISABLED FOR NOW
 }
 
 .spinning {
-  animation: spin 1s ease-in-out;
+  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
@@ -50,7 +50,7 @@ DISABLED FOR NOW
   }
 
   100% {
-    transform: rotateY(360deg);
+    transform: rotateY(720deg);
   }
 }
 
