@@ -11,8 +11,8 @@ DISABLED FOR NOW
 }*/
 
 .pack {
-  width: 400px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   /* background-color: gold; */
   display: flex;
   align-items: center;

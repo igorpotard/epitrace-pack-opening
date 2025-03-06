@@ -2,7 +2,6 @@
 
 const browserAPI = typeof browser !== "undefined" ? browser : chrome;
 
-console.log("content.js");
 
 function find_a(el) {
   if (el.tagName == "A") return el;
@@ -67,7 +66,7 @@ function closePackDisplay() {
   if (packDisplayer) {
     packDisplayer.style.display = "none";
     packDisplayer.innerHTML = ""; // Clear the display
-    document.location.reload(); // Reload the page to reset the display
+    //document.location.reload(); // Reload the page to reset the display
   }
 }
 
@@ -93,23 +92,40 @@ async function add_open_pack_button(traceSymbol) {
   button.style.cursor = "pointer";
   button.style.margin = "5px";
 
+		let gototrace = document.createElement("button");
+		gototrace.textContent = "Trace";
+		gototrace.style.background = "#007BFF";
+		gototrace.style.color = "white";
+		gototrace.style.border = "none";
+		gototrace.style.padding = "5px 10px";
+		gototrace.style.cursor = "pointer";
+		gototrace.style.margin = "5px";
+
   traceSymbol.setAttribute("data-processed", "true"); // Prevent duplicate processing
   traceSymbol.style.display = "none";
-  traceSymbol.parentNode.insertBefore(button, traceSymbol);
+
+		traceSymbol.parentNode.insertBefore(button, traceSymbol);
+		traceSymbol.parentNode.insertBefore(gototrace, traceSymbol);
 
   a_tag.href = "#";
-  console.log(a_tag);
-  console.log(traceSymbol);
+  //console.log(a_tag);
+  //console.log(traceSymbol);
 
   traceSymbol.setAttribute("link", link);
 
-  a_tag.addEventListener("click", function () {
-    openPackAnimation(button, percentage);
-  });
+		button.addEventListener("click", function () {
+				openPackAnimation(button, percentage);
+				return;
+		});
 
-  button.addEventListener("click", function () {
-    openPackAnimation(button, percentage);
-  });
+	gototrace.addEventListener("click", function () {
+			window.location.href = link;
+		});
+
+  //a_tag.addEventListener("click", function () {
+			//window.location.href = link;
+  //});
+
 }
 
 async function replaceTraceSymbols() {
@@ -137,17 +153,16 @@ async function replaceTraceSymbols() {
     console.log(href);
     var is_inside = false;
     for (let j = 0; j < hashes.length; j++) {
-      // Ne contient pas, donc je mets la classe en normal + j'enlève l'indicateur
       if (hashes[j].includes(href)) {
         is_inside = true;
       }
     }
 
     if (!is_inside) {
-      all_in_list[i].classList.remove("list__item__secondary");
+				all_in_list[i].classList.innerHTML = "?";//remove("list__item__secondary");
       var checkMark =
         all_in_list[i].getElementsByClassName("list__item__right")[0];
-      if (checkMark) checkMark.innerHTML = "";
+      if (checkMark) checkMark.innerHTML = "?";
     }
   }
 }
@@ -183,13 +198,12 @@ function make_confetis() {
 }
 
 function get_image(percentage) {
-  if (percentage == 100) return "icon";
-  if (percentage >= 90) return "rare_gold";
-  if (percentage >= 80) return "gold";
-  if (percentage >= 60) return "silver";
-  if (percentage >= 40) return "rare_bronze";
-  if (percentage >= 1) return "bronze";
-  return "icon"; // im a troller eheheh
+  if (percentage == 100) return "Champion_Wild_Card";
+		if (percentage >= 90) return "Legendary_Wild_Card";
+		if (percentage >= 80) return "Epic_Wild_Card";
+		if (percentage >= 60) return "Rare_Wild_Card";
+		if (percentage >= 40) return "Common_Wild_Card";
+		if (percentage >= 0) return "Elite_Wild_Card";
 }
 
 function get_color(image) {
@@ -205,7 +219,7 @@ let href = "";
 
 async function openPackAnimation(button, inputPercentage) {
   function main_pack() {
-    return browserAPI.runtime.getURL("img/pack.png");
+    return browserAPI.runtime.getURL("img/Star_Drop_Common.png");
   }
 
   let pack = document.createElement("div");
@@ -223,10 +237,6 @@ async function openPackAnimation(button, inputPercentage) {
     .getElementsByTagName("trace-symbol")[0]
     .getAttribute("link");
 
-  /*for (let i = 0; i < 3; i++) {
-    let randomPercentage = ; // Random percentage between 0 and 100
-    
-  }*/
   setTimeout(() => {
     let currentPercentage = 100;
     let decreaseTime = 1000; // 1 second total decrease time
@@ -235,7 +245,6 @@ async function openPackAnimation(button, inputPercentage) {
 
     let percentages = [
       Math.floor(Math.random() * 100),
-      //Math.floor(Math.random() * 100),
       inputPercentage,
     ];
 
